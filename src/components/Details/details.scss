@@ -1,0 +1,146 @@
+@import '../../assets/styles/global.scss';
+
+.details-banner {
+  height: 60vh;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      @include overlay();
+  }
+
+  &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background-image: linear-gradient(to top, $body-bg, rgba($black, 0));
+  }
+}
+
+.details__content {
+  margin-top: -40vh;
+  @include flex(flex-start, flex-start);
+  position: relative;
+  height: 741px;
+
+  @include smallDesktop {
+    justify-content: center;
+    margin-top: -54vh;
+    height: 100%;
+  }
+}
+
+.details__poster {
+  flex: 1;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: $border-radius;
+  height: 100%;
+
+  @include smallDesktop {
+    display: none;
+  }
+}
+
+.details__info {
+  width: 70%;
+  margin-left: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  @include smallDesktop {
+    width: 100%;
+  }
+
+  @include mobile {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+.details__title {
+  font-size: 55px;
+  font-weight: 900;
+}
+
+.genres {
+  display: flex;
+  gap: 10px;
+  margin: 30px 0;
+}
+
+.genres__item {
+  padding: 15px 25px;
+  border: 2px solid $text-color;
+  border-radius: $border-radius;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: $body-bg;
+}
+
+.details__overview {
+  font-size: 22px;
+
+  @include mobile {
+    font-size: 18px;
+  }
+}
+
+.actors__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+}
+
+.actors__img {
+  padding-top: 160px;
+  background-size: cover;
+  margin-bottom: 0.5rem;
+}
+
+.actors__title {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.actors__name {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.videos {
+  padding-top: 80px;
+}
+
+.video {
+  height: 800px;
+  border: none;
+}
+
+.video__title {
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.video__item {
+  margin-bottom: 40px;
+}
+
+.btn-none {
+  display: none;
+}

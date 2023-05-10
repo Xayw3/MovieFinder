@@ -1,0 +1,89 @@
+@import '../../assets/styles/global.scss';
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: 600;
+  @include flex(center, unset);
+  gap: 10px;
+
+  img {
+    width: 50px;
+
+    @include mobile {
+      width: 30px;
+    }
+  }
+}
+
+.header {
+  height: $header-height;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  transition: height .3s ease, background-color .3s ease;
+
+  &.shrink {
+    height: $header-shrink-height;
+    background-color: $body-bg;
+  }
+}
+
+.header__wrapper {
+  @include flex(center, space-between);
+  height: 100%;
+  padding: 0 2rem;
+  @include tablet {
+    justify-content: center;
+  }
+}
+
+.header__menu {
+  @include flex(center, unset);
+  gap: 2rem;
+
+  @include tablet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 5rem;
+    width: 100%;
+    background-color: $body-bg;
+    padding: 0 2rem;
+    box-shadow: $box-shadow;
+    padding: 0 5%;
+
+    @include flex(center, space-around)
+  }
+}
+
+.header__menu-item {
+  padding: 5px 0;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    transition: width .5s ease;
+    background-color: $primary-color;
+  }
+
+  &.active::after, &:hover::after {
+    width: 100%;
+  }
+}
+
+.header__menu-link {
+  font-weight: 700;
+  font-size: 1.5rem;
+
+  &.active {
+    color: $primary-color;
+  }
+}

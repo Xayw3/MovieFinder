@@ -1,0 +1,20 @@
+@import '../../assets/styles/global.scss';
+
+
+.movie-list__top {
+  @include flex(center, space-between);
+  margin-bottom: 20px;
+  
+  @include mobile {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+.movies-list {
+  padding: 40px 0;
+}
+
+.movie-list__btn {
+  font-size: 15px;
+}

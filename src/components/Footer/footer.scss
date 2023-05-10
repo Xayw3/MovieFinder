@@ -1,0 +1,38 @@
+@import '../../assets/styles/global.scss';
+
+.footer {
+  padding: 120px 0;
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.footer__menus {
+  @include flex(top, center);
+  gap: 100px;
+  margin-top: 50px;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+}
+
+.footer__menu {
+  @include flex(flex-start, flex-start);
+  flex-direction: column;
+  gap: 15px;
+  font-weight: 600;
+  
+  @include mobile {
+    width: 100%;
+    align-items: center
+  }
+}
+
+.footer-logo {
+  @include flex(center, center);
+  gap: 10px;
+  font-size: 30px;
+}

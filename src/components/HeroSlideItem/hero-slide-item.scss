@@ -1,0 +1,119 @@
+@import '../../assets/styles/global.scss';
+
+.hero-slide__item {
+  padding: 9rem 0;
+  width: 100%;
+  position: relative;
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 60vh;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @include overlay();
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to top, $body-bg, rgba($black, 0));
+  }
+}
+
+.hero-slide__content {
+  @include flex(center, center);
+  position: relative;
+  margin-top: 50px;
+}
+
+.hero-slide__content-info {
+  width: 55%;
+  padding: 0 3rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  
+  @include tablet {
+    width: 100%;
+  }
+}
+
+.hero-slide__title {
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1;
+
+  @include tablet {
+    font-size: 4rem;
+  }
+}
+
+.hero-slide__overview {
+  font-weight: 700;
+}
+
+.hero-slide__btns {
+  display: flex;
+  gap: 1rem;
+  z-index: 100;
+}
+
+.hero-slide__title, .hero-slide__overview, .hero-slide__btns {
+  opacity: 0;
+  transform: translateY(-100px);
+  transition: transform .5s ease, opacity .5s ease;
+}
+
+.hero-slide__content-poster {
+  flex: 1;
+  @include flex(center, center);
+  position: relative;
+
+  img {
+    width: 400px;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    transform: scale(0);
+    transition: transform .7s ease;
+  }
+
+  @include tablet {
+    display: none;
+  }
+}
+
+.hero-slide__item.active {
+  & .hero-slide__title, .hero-slide__overview, .hero-slide__btns {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  & .hero-slide__title {
+    transition-delay: 0.3s, 0.3s;
+  }
+
+  & .hero-slide__overview {
+    transition-delay: 0.6s, 0.6s;
+  }
+
+  & .hero-slide__btns {
+    transition-delay: 0.9s, 0.9s;
+  }
+
+  & .hero-slide__content-poster {
+    img {
+      transform: scale(1);
+    }
+  }
+}
