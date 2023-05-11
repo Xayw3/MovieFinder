@@ -46,16 +46,21 @@
   
   @include tablet {
     width: 100%;
+    gap: 20px;
   }
 }
 
 .hero-slide__title {
-  font-size: 5rem;
+  font-size: 60px;
   font-weight: 700;
   line-height: 1;
 
   @include tablet {
-    font-size: 4rem;
+    font-size: 40px;
+  }
+
+  @include mobile {
+    font-size: 29px;
   }
 }
 
@@ -86,6 +91,10 @@
     box-shadow: $box-shadow;
     transform: scale(0);
     transition: transform .7s ease;
+
+    @include smallDesktop {
+      width: 300px;
+    }
   }
 
   @include tablet {

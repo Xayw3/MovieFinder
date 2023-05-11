@@ -23,6 +23,7 @@ export type Movie = {
   budget: number,
   genres: Genres[],
   homepage: string,
+  name: string,
   id: number,
   'imdb_id': string,
   'original_language': string,

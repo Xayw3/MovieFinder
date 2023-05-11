@@ -42,6 +42,8 @@ const MoviePage = () => {
     setSimilar(similars.data.results.filter((el: Movies) => el.poster_path !== null));
   };
 
+  console.log(movie);
+
   useEffect(() => {
     if (id) {
       getMovie();
@@ -56,7 +58,7 @@ const MoviePage = () => {
           <Details
             bgImage={movie.backdrop_path ? movie.backdrop_path : ''}
             poster={movie.poster_path}
-            title={movie.title}
+            title={movie.title || movie.name}
             genres={movie.genres}
             overview={movie.overview}
             actors={actors}

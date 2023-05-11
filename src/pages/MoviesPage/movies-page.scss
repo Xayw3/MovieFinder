@@ -1,7 +1,11 @@
 @import '../../assets/styles/global.scss';
 
 .movies {
-  padding: 150px 0;
+  padding: 150px 0 80px;
+
+  @include tablet {
+    padding-bottom: 20px
+  }
 }
 
 .movies__list {
@@ -45,9 +49,12 @@
     right: 0;
     top: 1px;
     font-size: 21px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding: 0;
     height: 44px;
+    width: 44px;
+    border-radius: 50%;
+    color: #fff;
+    @include flex(center, center);
 
     @include mobile {
       right: 1px;
@@ -68,6 +75,10 @@
 .movies-btn {
   margin: 128px auto 60px;
   display: block;
+
+  @include tablet {
+    margin: 36px auto;
+  }
 }
 
 .movies__top {

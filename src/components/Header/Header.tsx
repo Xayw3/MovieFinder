@@ -44,7 +44,7 @@ const Header = () => {
         <div className="header__wrapper">
           <div className="logo">
             <img src={logo} alt="Movies" />
-            <Link to="/">MovieFinder</Link>
+            <Link to="/" onClick={() => window.scrollTo(0, 0)}>MovieFinder</Link>
           </div>
           <ul className="header__menu">
             {
