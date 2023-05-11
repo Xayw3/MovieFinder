@@ -76,6 +76,10 @@
 .details__title {
   font-size: 55px;
   font-weight: 900;
+
+  @include mobile {
+    font-size: 29px;
+  }
 }
 
 .genres {
