@@ -146,13 +146,15 @@ const MoviesPage = () => {
         </div>
         <div className="movies__list">
           {
-            movies.map(({ id, title, poster_path }) => (
+            movies.map(({
+              id, title, poster_path, name,
+            }) => (
               <MovieCard
                 key={id}
                 className="movies__item"
                 link={`${location.pathname}/${id}`}
                 image={poster_path}
-                title={title}
+                title={title || name}
               />
             ))
           }
