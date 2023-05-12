@@ -91,10 +91,10 @@ const MoviesPage = () => {
   useEffect(() => {
     const changeLocation = () => {
       setPage(1);
+      setGenresId(0);
       window.scrollTo(0, 0);
     };
     
-    setGenresId(0);
     setCurrentGenre('');
     setInputValue('');
 
