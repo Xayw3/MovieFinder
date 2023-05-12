@@ -99,6 +99,7 @@ const MoviesPage = () => {
     setInputValue('');
 
     changeLocation();
+    getMovies();
   }, [location.pathname]);
 
   return (
