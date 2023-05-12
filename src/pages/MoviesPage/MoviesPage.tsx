@@ -90,7 +90,7 @@ const MoviesPage = () => {
 
   useEffect(() => {
     const changeLocation = () => {
-      setGenresId(0);
+      setGenreId(0);
       setPage(1);
       window.scrollTo(0, 0);
     };
@@ -99,7 +99,6 @@ const MoviesPage = () => {
     setInputValue('');
 
     changeLocation();
-    getMovies();
   }, [location.pathname]);
 
   return (
