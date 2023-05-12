@@ -93,7 +93,8 @@ const MoviesPage = () => {
       setPage(1);
       window.scrollTo(0, 0);
     };
-
+    
+    setGenresId(0);
     setCurrentGenre('');
     setInputValue('');
 
