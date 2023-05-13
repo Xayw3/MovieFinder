@@ -75,6 +75,19 @@ const MoviesPage = () => {
   };
 
   useEffect(() => {
+    const changeLocation = () => {
+      setPage(1);
+      setGenreId(0);
+      setCurrentGenre('');
+      window.scrollTo(0, 0);
+    };
+
+    setInputValue('');
+
+    changeLocation();
+  }, [location.pathname]);
+
+  useEffect(() => {
     getGenres();
 
     if (!inputValue) {
@@ -86,18 +99,7 @@ const MoviesPage = () => {
     if (genreId > 0) {
       getMoviesByGenre();
     }
-  }, [page, location, genreId]);
-
-  useEffect(() => {
-    const changeLocation = () => {
-      setPage(1);
-      window.scrollTo(0, 0);
-    };
-
-    setInputValue('');
-
-    changeLocation();
-  }, [location.pathname]);
+  }, [page, location, genreId, location.pathname]);
 
   return (
     <section className="movies">
