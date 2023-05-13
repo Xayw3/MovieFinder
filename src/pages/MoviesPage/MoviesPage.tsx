@@ -77,10 +77,13 @@ const MoviesPage = () => {
   useEffect(() => {
     const changeLocation = () => {
       setPage(1);
-      setGenreId(0);
-      setCurrentGenre('');
       window.scrollTo(0, 0);
     };
+
+    if (genreId > 0) {
+      setGenreId(0);
+      setCurrentGenre('');
+    }
 
     setInputValue('');
 
@@ -95,11 +98,13 @@ const MoviesPage = () => {
     } else {
       searchMovies();
     }
+  }, [page, location.pathname]);
 
+  useEffect(() => {
     if (genreId > 0) {
       getMoviesByGenre();
     }
-  }, [page, location, genreId, location.pathname]);
+  }, [genreId]);
 
   return (
     <section className="movies">
@@ -132,7 +137,7 @@ const MoviesPage = () => {
                       <input
                         type="radio"
                         onClick={() => {
-                          setCurrentGenre(el.name); setActiveClass(false); setGenreId(el.id); setPage(1);
+                          setGenreId(el.id); setCurrentGenre(el.name); setActiveClass(false); setPage(1);
                         }}
                         className="radio"
                         id={el.id}

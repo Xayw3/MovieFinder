@@ -42,8 +42,6 @@ const MoviePage = () => {
     setSimilar(similars.data.results.filter((el: Movies) => el.poster_path !== null));
   };
 
-  console.log(movie);
-
   useEffect(() => {
     if (id) {
       getMovie();
