@@ -35,7 +35,7 @@ const MoviesPage = () => {
 
   const getMoviesByGenre = async () => {
     const moviesData = await axios.get(
-      `https://api.themoviedb.org/3/discover/${location.pathname}?api_key=433e58e14ddff9586a5b1f8d7895559f&with_genres=${genreId}`,
+      `https://api.themoviedb.org/3/discover/${location.pathname}?api_key=433e58e14ddff9586a5b1f8d7895559f&with_genres=${genreId}&page=${page}`,
     );
 
     if (page > 1) {
@@ -74,6 +74,16 @@ const MoviesPage = () => {
     }
   };
 
+  const onLoadMore = () => {
+    setPage(page + 1);
+
+    if (genreId > 0) {
+      getMoviesByGenre();
+    } else {
+      getMovies();
+    }
+  };
+
   useEffect(() => {
     const changeLocation = () => {
       setPage(1);
@@ -98,7 +108,7 @@ const MoviesPage = () => {
     } else {
       searchMovies();
     }
-  }, [page, location.pathname]);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (genreId > 0) {
@@ -166,7 +176,7 @@ const MoviesPage = () => {
             ))
           }
         </div>
-        <button className="btn movies-btn" onClick={() => { setPage(page + 1); getMovies(); }}>Load more</button>
+        <button className="btn movies-btn" onClick={onLoadMore}>Load more</button>
       </div>
     </section>
   );
