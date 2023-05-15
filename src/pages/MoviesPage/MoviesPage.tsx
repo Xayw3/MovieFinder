@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { RiArrowUpSLine, RiArrowDownSLine } from 'react-icons/ri';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import Movies from '../../models/moviesModel';
+import Loader from '../../components/Loader/Loader';
 
 const MoviesPage = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const MoviesPage = () => {
   const [currentGenre, setCurrentGenre] = useState('');
   const [genreId, setGenreId] = useState(0);
   const [activeClass, setActiveClass] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const filterMovies = (data: Movies[]) => data.filter((el: Movies) => el.poster_path !== null);
 
@@ -84,6 +86,8 @@ const MoviesPage = () => {
     }
   };
 
+  console.log(loading);
+
   useEffect(() => {
     getGenres();
     const changeLocation = () => {
@@ -105,13 +109,19 @@ const MoviesPage = () => {
     }
 
     setInputValue('');
-  }, [location.pathname, page]);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (genreId > 0) {
       getMoviesByGenre();
     }
   }, [genreId]);
+
+  useEffect(() => {
+    if (movies.length === 0) {
+      setLoading(true);
+    } else setLoading(false);
+  }, [movies]);
 
   return (
     <section className="movies">
@@ -175,6 +185,7 @@ const MoviesPage = () => {
         </div>
         <button className="btn movies-btn" onClick={onLoadMore}>Load more</button>
       </div>
+      {loading && <Loader />}
     </section>
   );
 };

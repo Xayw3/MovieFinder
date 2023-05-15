@@ -39,7 +39,7 @@ const MoviePage = () => {
 
     setMovie(data.data);
 
-    setSimilar(similars.data.results.filter((el: Movies) => el.poster_path !== null));
+    setSimilar(similars.data.results.filter((el: Movies) => el.backdrop_path !== null));
   };
 
   useEffect(() => {
