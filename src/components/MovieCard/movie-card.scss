@@ -13,6 +13,18 @@
   }
 }
 
+.movie-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  transform: translateY(-100px);
+  opacity: 0;
+  transition: transform .5s ease, opacity .5s ease;
+  color: #fff;
+}
+
 .movie-card {
   position: relative;
   @include flex(center, center);
@@ -31,6 +43,12 @@
     transform: scale(1);
   }
 
+  &:hover .movie-title {
+    transition-delay: .5s;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -47,11 +65,14 @@
   &:hover::before {
     opacity: .8;
   }
+
+  @include tablet {
+    max-width: 70%;
+  }
 }
 
 .movie-link {
   display: block;
-  max-width: 300px;
   height: 500px;
   width: 100%;
 }

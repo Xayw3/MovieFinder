@@ -26,9 +26,11 @@ const MoviesSlider: FC<MoviesSliderProps> = ({
         slidesPerView="auto"
       >
         {
-          data ? data.map(({ id, title, poster_path }) => (
+          data ? data.map(({
+            id, title, poster_path, backdrop_path,
+          }) => (
             <SwiperSlide className="slide" key={id}>
-              <MovieCard link={`/${link}/${id}`} image={poster_path} title={title} />
+              <MovieCard link={`/${link}/${id}`} image={backdrop_path} title={title} />
             </SwiperSlide>
           )) : null
         }

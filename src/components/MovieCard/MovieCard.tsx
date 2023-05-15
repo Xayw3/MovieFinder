@@ -15,13 +15,14 @@ const MovieCard: FC<MovieCardProps> = ({
   image, link, title, className,
 }) => {
   const mediumImage = (url: string) => `https://www.themoviedb.org/t/p/w500/${url}`;
+  const originalImage = (url: string) => `https://www.themoviedb.org/t/p/original/${url}`;
 
   return (
     <Link className={`movie-link ${className || ''}`} to={link}>
-      <div className="movie-card" style={{ backgroundImage: `url(${mediumImage(image)})` }}>
+      <div className="movie-card" style={{ backgroundImage: `url(${originalImage(image)})` }}>
         <button className="btn-outline btn movie-card__btn"><FaPlay className="icon" /></button>
+        <h2 className="movie-title">{title}</h2>
       </div>
-      <h3 className="movie-title">{title}</h3>
     </Link>
   );
 };

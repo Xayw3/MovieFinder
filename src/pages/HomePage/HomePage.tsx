@@ -24,7 +24,7 @@ const HomePage = () => {
       'https://api.themoviedb.org/3/movie/popular?api_key=433e58e14ddff9586a5b1f8d7895559f',
     );
 
-    const filterData = (data: Movies[]) => data.filter((el: Movies) => el.poster_path !== null);
+    const filterData = (data: Movies[]) => data.filter((el: Movies) => el.backdrop_path !== null);
 
     setPopularMovies(filterData(popularMoviesData.data.results));
     setTopRatedMovies(filterData(topRatedMoviesData.data.results));

@@ -75,40 +75,37 @@ const MoviesPage = () => {
   };
 
   const onLoadMore = () => {
-    setPage(page + 1);
-
     if (genreId > 0) {
+      setPage(page + 1);
       getMoviesByGenre();
     } else {
+      setPage(page + 1);
       getMovies();
     }
   };
 
   useEffect(() => {
+    getGenres();
     const changeLocation = () => {
       setPage(1);
       window.scrollTo(0, 0);
     };
+
+    changeLocation();
 
     if (genreId > 0) {
       setGenreId(0);
       setCurrentGenre('');
     }
 
-    setInputValue('');
-
-    changeLocation();
-  }, [location.pathname]);
-
-  useEffect(() => {
-    getGenres();
-
     if (!inputValue) {
       getMovies();
     } else {
       searchMovies();
     }
-  }, [location.pathname]);
+
+    setInputValue('');
+  }, [location.pathname, page]);
 
   useEffect(() => {
     if (genreId > 0) {
