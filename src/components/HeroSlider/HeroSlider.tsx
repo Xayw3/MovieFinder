@@ -36,7 +36,6 @@ const HeroSlider = () => {
         }}
         spaceBetween={0}
         slidesPerView={1}
-        loop
         noSwiping
         allowTouchMove={false}
       >

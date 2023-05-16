@@ -10,6 +10,12 @@ const Footer = () => {
     ['You must watch', 'Recent release', 'Top IMDB'],
   ];
 
+  const handleClick = (link: string) => {
+    if (link === 'Home') {
+      window.scrollTo(0, 0);
+    }
+  };
+
   return (
     <footer className="footer" style={{ backgroundImage: `url(${bg})` }}>
       <div className="container">
@@ -24,7 +30,7 @@ const Footer = () => {
                 {
                   el.map((link) => (
                     <li key={Math.random()} className="footer__item">
-                      <Link to="/">{link}</Link>
+                      <Link to="/" onClick={() => handleClick(link)}>{link}</Link>
                     </li>
                   ))
                 }
