@@ -97,5 +97,9 @@ a {
 
   @include tablet {
     max-width: 200px;
+
+    &:hover {
+      max-width: 200px;
+    }
   }
 }

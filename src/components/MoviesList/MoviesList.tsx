@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { JsxElement } from 'typescript';
 import './movies-list.scss';
 
 type MovieListProps = {

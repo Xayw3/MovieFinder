@@ -48,6 +48,8 @@ const MoviesPage = () => {
     }
   };
 
+  console.log(category);
+
   const getGenres = async () => {
     const genresData = await axios.get(`https://api.themoviedb.org/3/genre/${location.pathname}/list?api_key=433e58e14ddff9586a5b1f8d7895559f&`);
 
@@ -184,7 +186,7 @@ const MoviesPage = () => {
                 key={id}
                 className="movies__item"
                 link={`${location.pathname}/${id}`}
-                image={poster_path}
+                smallImage={poster_path}
                 title={title || name}
               />
             ))
