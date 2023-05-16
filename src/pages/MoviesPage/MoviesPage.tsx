@@ -39,7 +39,6 @@ const MoviesPage = () => {
     );
 
     const newMovies = filterMovies(moviesData.data.results);
-    console.log(moviesData.data);
 
     if (pageNumber === 1) {
       setMovies(newMovies);
@@ -47,8 +46,6 @@ const MoviesPage = () => {
       setMovies((prevMovies) => [...prevMovies, ...newMovies]);
     }
   };
-
-  console.log(category);
 
   const getGenres = async () => {
     const genresData = await axios.get(`https://api.themoviedb.org/3/genre/${location.pathname}/list?api_key=433e58e14ddff9586a5b1f8d7895559f&`);
