@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Movies, { Actors, Movie, Videos } from '../../models/moviesModel';
 import Details from '../../components/Details/Details';
+import Loader from '../../components/Loader/Loader';
 
 const MoviePage = () => {
   const { id } = useParams();
@@ -13,33 +14,42 @@ const MoviePage = () => {
   const [actors, setActors] = useState<Actors[]>([]);
   const [videos, setVideos] = useState<Videos[]>([]);
   const [similar, setSimilar] = useState<Movies[]>([]);
+  const [loader, setLoader] = useState(false);
 
   const getMovie = async () => {
-    const data = await axios.get(
-      `https://api.themoviedb.org/3/${location}/${id}?api_key=433e58e14ddff9586a5b1f8d7895559f`,
-    );
+    setLoader(true);
 
-    const actor = await axios.get(
-      `https://api.themoviedb.org/3/${location}/${id}/credits?api_key=433e58e14ddff9586a5b1f8d7895559f`,
-    );
+    try {
+      const data = await axios.get(
+        `https://api.themoviedb.org/3/${location}/${id}?api_key=433e58e14ddff9586a5b1f8d7895559f`,
+      );
 
-    const video = await axios.get(
-      `https://api.themoviedb.org/3/${location}/${id}/videos?api_key=433e58e14ddff9586a5b1f8d7895559f`,
-    );
+      const actor = await axios.get(
+        `https://api.themoviedb.org/3/${location}/${id}/credits?api_key=433e58e14ddff9586a5b1f8d7895559f`,
+      );
 
-    const similars = await axios.get(
-      `https://api.themoviedb.org/3/${location}/${id}/similar?api_key=433e58e14ddff9586a5b1f8d7895559f`,
-    );
+      const video = await axios.get(
+        `https://api.themoviedb.org/3/${location}/${id}/videos?api_key=433e58e14ddff9586a5b1f8d7895559f`,
+      );
 
-    setActors([...actor.data.cast].slice(0, 6));
+      const similars = await axios.get(
+        `https://api.themoviedb.org/3/${location}/${id}/similar?api_key=433e58e14ddff9586a5b1f8d7895559f`,
+      );
 
-    setVideos(video.data.results.filter(
-      (el: Videos) => el.type === 'Teaser' && el.name !== 'Tickets on Sale',
-    ));
+      setActors([...actor.data.cast].slice(0, 6));
 
-    setMovie(data.data);
+      setVideos(video.data.results.filter(
+        (el: Videos) => el.type === 'Teaser' && el.name !== 'Tickets on Sale',
+      ));
 
-    setSimilar(similars.data.results.filter((el: Movies) => el.backdrop_path !== null));
+      setMovie(data.data);
+
+      setSimilar(similars.data.results.filter((el: Movies) => el.backdrop_path !== null));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoader(false);
+    }
   };
 
   useEffect(() => {
@@ -51,6 +61,7 @@ const MoviePage = () => {
 
   return (
     <>
+      {loader && <Loader />}
       {
         movie ? (
           <Details

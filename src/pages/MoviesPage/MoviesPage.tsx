@@ -23,28 +23,24 @@ const MoviesPage = () => {
 
   const filterMovies = (data: Movies[]) => data.filter((el: Movies) => el.poster_path !== null);
 
-  const getMovies = async () => {
+  const getMovies = async (pageNumber?: number) => {
     const moviesData = await axios.get(
-      `https://api.themoviedb.org/3${location.pathname}/${category}?api_key=433e58e14ddff9586a5b1f8d7895559f&page=${page}`,
+      `https://api.themoviedb.org/3${location.pathname}/${category}?api_key=433e58e14ddff9586a5b1f8d7895559f&page=${pageNumber}`,
     );
 
-    if (page > 1) {
-      setMovies([...movies, ...filterMovies(moviesData.data.results)]);
-    } else {
-      setMovies(filterMovies(moviesData.data.results));
-    }
+    const newMovies = filterMovies(moviesData.data.results);
+
+    setMovies((prevMovies) => [...prevMovies, ...newMovies]);
   };
 
-  const getMoviesByGenre = async () => {
+  const getMoviesByGenre = async (pageNumber?: number) => {
     const moviesData = await axios.get(
-      `https://api.themoviedb.org/3/discover/${location.pathname}?api_key=433e58e14ddff9586a5b1f8d7895559f&with_genres=${genreId}&page=${page}`,
+      `https://api.themoviedb.org/3/discover/${location.pathname}?api_key=433e58e14ddff9586a5b1f8d7895559f&with_genres=${genreId}&page=${pageNumber}`,
     );
 
-    if (page > 1) {
-      setMovies([...movies, ...filterMovies(moviesData.data.results)]);
-    } else {
-      setMovies(filterMovies(moviesData.data.results));
-    }
+    const newMovies = filterMovies(moviesData.data.results);
+
+    setMovies((prevMovies) => [...prevMovies, ...newMovies]);
   };
 
   const getGenres = async () => {
@@ -53,17 +49,14 @@ const MoviesPage = () => {
     setGenres(genresData.data.genres);
   };
 
-  const searchMovies = async () => {
-    const moviesData = await axios.get(
-      `https://api.themoviedb.org/3/search/${location.pathname}?api_key=433e58e14ddff9586a5b1f8d7895559f&query=${inputValue}&page=${page}`,
-    );
-
+  const searchMovies = async (pageNumber?: number) => {
     if (inputValue) {
-      if (page > 1) {
-        setMovies([...movies, ...filterMovies(moviesData.data.results)]);
-      } else {
-        setMovies(filterMovies(moviesData.data.results));
-      }
+      const moviesData = await axios.get(
+        `https://api.themoviedb.org/3/search/${location.pathname}?api_key=433e58e14ddff9586a5b1f8d7895559f&query=${inputValue}&page=${pageNumber}`,
+      );
+
+      const newMovies = filterMovies(moviesData.data.results);
+      setMovies((prevMovies) => [...prevMovies, ...newMovies]);
     } else {
       setPage(1);
       getMovies();
@@ -77,37 +70,41 @@ const MoviesPage = () => {
   };
 
   const onLoadMore = () => {
-    if (genreId > 0) {
-      setPage(page + 1);
-      getMoviesByGenre();
-    } else {
-      setPage(page + 1);
-      getMovies();
-    }
+    setPage(page + 1);
+
+    setTimeout(() => {
+      if (inputValue) {
+        searchMovies(page + 1);
+      } else if (genreId > 0) {
+        getMoviesByGenre(page + 1);
+      } else {
+        getMovies(page + 1);
+      }
+    }, 200);
   };
 
-  console.log(loading);
-
   useEffect(() => {
-    getGenres();
+    const clearMovies = () => {
+      setMovies([]);
+    };
+
+    clearMovies();
+    setPage(1);
+
+    setTimeout(() => {
+      getMovies();
+    }, 200);
+
     const changeLocation = () => {
-      setPage(1);
       window.scrollTo(0, 0);
     };
 
     changeLocation();
 
-    if (genreId > 0) {
-      setGenreId(0);
-      setCurrentGenre('');
-    }
+    getGenres();
 
-    if (!inputValue) {
-      getMovies();
-    } else {
-      searchMovies();
-    }
-
+    setGenreId(0);
+    setCurrentGenre('');
     setInputValue('');
   }, [location.pathname]);
 
@@ -134,7 +131,7 @@ const MoviesPage = () => {
               onChange={(el) => setInputValue(el.target.value)}
               type="text"
             />
-            <button onClick={() => { setPage(1); searchMovies(); }} className="btn">
+            <button onClick={() => { setPage(1); setMovies([]); searchMovies(); }} className="btn">
               <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="#fff" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 119.828 122.88" enableBackground="new 0 0 119.828 122.88" xmlSpace="preserve"><g><path d="M48.319,0C61.662,0,73.74,5.408,82.484,14.152c8.744,8.744,14.152,20.823,14.152,34.166 c0,12.809-4.984,24.451-13.117,33.098c0.148,0.109,0.291,0.23,0.426,0.364l34.785,34.737c1.457,1.449,1.465,3.807,0.014,5.265 c-1.449,1.458-3.807,1.464-5.264,0.015L78.695,87.06c-0.221-0.22-0.408-0.46-0.563-0.715c-8.213,6.447-18.564,10.292-29.814,10.292 c-13.343,0-25.423-5.408-34.167-14.152C5.408,73.741,0,61.661,0,48.318s5.408-25.422,14.152-34.166C22.896,5.409,34.976,0,48.319,0 L48.319,0z M77.082,19.555c-7.361-7.361-17.53-11.914-28.763-11.914c-11.233,0-21.403,4.553-28.764,11.914 C12.194,26.916,7.641,37.085,7.641,48.318c0,11.233,4.553,21.403,11.914,28.764c7.36,7.361,17.53,11.914,28.764,11.914 c11.233,0,21.402-4.553,28.763-11.914c7.361-7.36,11.914-17.53,11.914-28.764C88.996,37.085,84.443,26.916,77.082,19.555 L77.082,19.555z" /></g></svg>
             </button>
           </div>
@@ -183,7 +180,7 @@ const MoviesPage = () => {
             ))
           }
         </div>
-        <button className="btn movies-btn" onClick={onLoadMore}>Load more</button>
+        <button className="btn movies-btn" onClick={() => onLoadMore()}>Load more</button>
       </div>
       {loading && <Loader />}
     </section>

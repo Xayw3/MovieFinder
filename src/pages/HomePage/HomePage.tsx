@@ -3,33 +3,43 @@ import { useEffect, useState } from 'react';
 import HeroSlider from '../../components/HeroSlider/HeroSlider';
 import MoviesSlider from '../../components/MoviesSlider/MoviesSlider';
 import Movies from '../../models/moviesModel';
+import Loader from '../../components/Loader/Loader';
 
 const HomePage = () => {
   const [popularMovies, setPopularMovies] = useState<Movies[]>();
   const [topRatedMovies, setTopRatedMovies] = useState<Movies[]>();
   const [topRatedShows, setTopRatedShows] = useState<Movies[]>();
   const [popularShows, setPopularShows] = useState<Movies[]>();
+  const [loading, setLoading] = useState(false);
 
   const getMovies = async () => {
-    const popularShowsData = await axios.get(
-      'https://api.themoviedb.org/3/tv/popular?api_key=433e58e14ddff9586a5b1f8d7895559f',
-    );
-    const topRatedMoviesData = await axios.get(
-      'https://api.themoviedb.org/3/movie/top_rated?api_key=433e58e14ddff9586a5b1f8d7895559f',
-    );
-    const topRatedShowsData = await axios.get(
-      'https://api.themoviedb.org/3/tv/top_rated?api_key=433e58e14ddff9586a5b1f8d7895559f',
-    );
-    const popularMoviesData = await axios.get(
-      'https://api.themoviedb.org/3/movie/popular?api_key=433e58e14ddff9586a5b1f8d7895559f',
-    );
+    setLoading(true);
 
-    const filterData = (data: Movies[]) => data.filter((el: Movies) => el.backdrop_path !== null);
+    try {
+      const popularShowsData = await axios.get(
+        'https://api.themoviedb.org/3/tv/popular?api_key=433e58e14ddff9586a5b1f8d7895559f',
+      );
+      const topRatedMoviesData = await axios.get(
+        'https://api.themoviedb.org/3/movie/top_rated?api_key=433e58e14ddff9586a5b1f8d7895559f',
+      );
+      const topRatedShowsData = await axios.get(
+        'https://api.themoviedb.org/3/tv/top_rated?api_key=433e58e14ddff9586a5b1f8d7895559f',
+      );
+      const popularMoviesData = await axios.get(
+        'https://api.themoviedb.org/3/movie/popular?api_key=433e58e14ddff9586a5b1f8d7895559f',
+      );
 
-    setPopularMovies(filterData(popularMoviesData.data.results));
-    setTopRatedMovies(filterData(topRatedMoviesData.data.results));
-    setTopRatedShows(filterData(topRatedShowsData.data.results));
-    setPopularShows(filterData(popularShowsData.data.results));
+      const filterData = (data: Movies[]) => data.filter((el: Movies) => el.backdrop_path !== null);
+
+      setPopularMovies(filterData(popularMoviesData.data.results));
+      setTopRatedMovies(filterData(topRatedMoviesData.data.results));
+      setTopRatedShows(filterData(topRatedShowsData.data.results));
+      setPopularShows(filterData(popularShowsData.data.results));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const moviesData = [
@@ -65,6 +75,7 @@ const HomePage = () => {
 
   return (
     <>
+      {loading && <Loader />}
       <HeroSlider />
       {
         moviesData.map((el) => (
