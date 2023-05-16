@@ -34,12 +34,6 @@ const HomePage = () => {
     setPopularShows(filterData(popularShowsData.data.results));
   };
 
-  useEffect(() => {
-    if (popularMovies?.length === 0 || popularShows?.length === 0 || topRatedMovies?.length === 0 || topRatedShows?.length === 0) {
-      setLoading(true);
-    } else setLoading(false);
-  }, [popularMovies, topRatedMovies, topRatedShows, popularShows]);
-
   const moviesData = [
     {
       data: popularMovies,
@@ -68,7 +62,12 @@ const HomePage = () => {
   ];
 
   useEffect(() => {
+    setLoading(true);
     getMovies();
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, []);
 
   return (
