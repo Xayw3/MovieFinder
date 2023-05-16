@@ -33,14 +33,19 @@ const MoviesPage = () => {
     setMovies((prevMovies) => [...prevMovies, ...newMovies]);
   };
 
-  const getMoviesByGenre = async (pageNumber?: number) => {
+  const getMoviesByGenre = async (pageNumber: number = 1) => {
     const moviesData = await axios.get(
       `https://api.themoviedb.org/3/discover/${location.pathname}?api_key=433e58e14ddff9586a5b1f8d7895559f&with_genres=${genreId}&page=${pageNumber}`,
     );
 
     const newMovies = filterMovies(moviesData.data.results);
+    console.log(moviesData.data);
 
-    setMovies((prevMovies) => [...prevMovies, ...newMovies]);
+    if (pageNumber === 1) {
+      setMovies(newMovies);
+    } else {
+      setMovies((prevMovies) => [...prevMovies, ...newMovies]);
+    }
   };
 
   const getGenres = async () => {
