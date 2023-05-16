@@ -71,7 +71,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <>
+    <div className="home">
       {loading && <Loader />}
       <HeroSlider />
       {
@@ -86,7 +86,7 @@ const HomePage = () => {
           />
         ))
       }
-    </>
+    </div>
   );
 };
 
