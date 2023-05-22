@@ -5,6 +5,8 @@ import { useLocation, useParams } from 'react-router-dom';
 import Movies, { Actors, Movie, Videos } from '../../models/moviesModel';
 import Details from '../../components/Details/Details';
 import Loader from '../../components/Loader/Loader';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 const MoviePage = () => {
   const { id } = useParams();
@@ -61,6 +63,7 @@ const MoviePage = () => {
 
   return (
     <>
+      <Header />
       {loader && <Loader />}
       {
         movie ? (
@@ -77,6 +80,7 @@ const MoviePage = () => {
           />
         ) : null
       }
+      <Footer />
     </>
   );
 };

@@ -4,6 +4,8 @@ import HeroSlider from '../../components/HeroSlider/HeroSlider';
 import MoviesSlider from '../../components/MoviesSlider/MoviesSlider';
 import Movies from '../../models/moviesModel';
 import Loader from '../../components/Loader/Loader';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 const HomePage = () => {
   const [popularMovies, setPopularMovies] = useState<Movies[]>();
@@ -71,10 +73,12 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="home">
-      {loading && <Loader />}
-      <HeroSlider />
-      {
+    <>
+      <Header />
+      <div className="home">
+        {loading && <Loader />}
+        <HeroSlider />
+        {
         moviesData.map((el) => (
           <MoviesSlider
             key={Math.random()}
@@ -86,7 +90,9 @@ const HomePage = () => {
           />
         ))
       }
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 };
 
