@@ -128,7 +128,11 @@ const MoviesPage = () => {
   useEffect(() => {
     if (movies.length === 0) {
       setLoading(true);
-    } else setLoading(false);
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 100);
+    }
   }, [movies]);
 
   return (

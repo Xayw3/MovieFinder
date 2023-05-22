@@ -50,7 +50,9 @@ const MoviePage = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoader(false);
+      setTimeout(() => {
+        setLoader(false);
+      }, 100);
     }
   };
 
