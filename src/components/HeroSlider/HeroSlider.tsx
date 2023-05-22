@@ -1,16 +1,23 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/no-extraneous-dependencies */
 import './hero-slider.scss';
-import 'swiper/swiper.min.css';
-import SwiperCore, { Autoplay } from 'swiper';
+import 'swiper/swiper-bundle.min.css';
+import SwiperCore, { Autoplay, EffectFade } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { InView, useInView } from 'react-intersection-observer';
+
 import axios from 'axios';
 import HeroSlideItem from '../HeroSlideItem/HeroSlideItem';
 import Movies from '../../models/moviesModel';
 
 const HeroSlider = () => {
   const [movies, setMovies] = useState<Movies[]>([]);
+  const [isInView, setIsInView] = useState(false);
+
+  const swiperRef = useRef<SwiperCore | null>(null);
+
+  SwiperCore.use([Autoplay, EffectFade]);
 
   const getMovies = async () => {
     const data = await axios.get(
@@ -24,18 +31,46 @@ const HeroSlider = () => {
     getMovies();
   }, []);
 
-  SwiperCore.use([Autoplay]);
+  const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+    const [entry] = entries;
+    setIsInView(entry.isIntersecting);
+  };
+
+  useEffect(() => {
+    const swiper = swiperRef.current;
+    if (swiper) {
+      if (isInView) {
+        swiper.autoplay.start();
+      } else {
+        swiper.autoplay.stop();
+      }
+    }
+  }, [isInView]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersection);
+    const target = document.querySelector('.hero-slide');
+    if (target) {
+      observer.observe(target);
+    }
+    return () => {
+      if (target) {
+        observer.unobserve(target);
+      }
+    };
+  }, []);
 
   return (
     <div className="hero-slide">
       <Swiper
-        modules={[Autoplay]}
-        autoplay={{
-          delay: 3500,
-          disableOnInteraction: false,
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
         }}
         spaceBetween={0}
+        modules={[EffectFade]}
         slidesPerView={1}
+        autoplay={{ delay: 3000 }}
+        effect="fade"
         noSwiping
         allowTouchMove={false}
       >
